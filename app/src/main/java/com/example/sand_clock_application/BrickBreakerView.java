@@ -14,7 +14,7 @@ public class BrickBreakerView extends View {
 
     private GameListener gameListener;
     private int score = 0;
-    private final int ROWS = 6;
+    private final int ROWS = 6 ;
     private final int COLS = 7;
     private Ball ball;
     boolean isInteractive = true;
@@ -249,23 +249,61 @@ public class BrickBreakerView extends View {
         Choreographer.getInstance().removeFrameCallback(frameCallback);
     }
 
-    public void resetGame() {
+    public void loadLevel(int level) {
         stopGame();
-        score = 0;
-        for (int r = 0; r < ROWS; r++) {
-            for (int c = 0; c < COLS; c++) {
-                bricks[r][c] = true;
-            }
+        float currentSpeedMultiplier = 1.0f;
+
+        if (level == 1) {
+            currentSpeedMultiplier = 1.0f;
+            setupLevel1();
+        } else if (level == 2) {
+            currentSpeedMultiplier = 1.3f;
+            setupLevel2();
+        } else {
+            currentSpeedMultiplier = 1.6f;
+            setupLevel3();
         }
+
         if (getWidth() > 0 && getHeight() > 0) {
             paddleX = getWidth() / 2f - paddleWidth / 2f;
             paddleY = getHeight() - padding - 100f;
             if (ball != null) {
                 ball.x = getWidth() / 2f;
                 ball.y = paddleY - ball.radius - 40f;
-                ball.resetRandomDirection();
+                ball.resetRandomDirection(currentSpeedMultiplier);
             }
         }
         invalidate();
+    }
+
+    private void setupLevel1() {
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                bricks[r][c] = (r < 4);
+            }
+        }
+    }
+
+    private void setupLevel2() {
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                bricks[r][c] = ((r + c) % 2 == 0);
+            }
+        }
+    }
+
+    private void setupLevel3() {
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                bricks[r][c] = (c != 3 && r < 5);
+            }
+        }
+    }
+
+    public void resetScore() {
+        score = 0;
+        if (gameListener != null) {
+            gameListener.onScoreUpdated(score);
+        }
     }
 }

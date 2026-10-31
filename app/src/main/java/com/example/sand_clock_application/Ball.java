@@ -11,13 +11,13 @@ public class Ball {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        resetRandomDirection();
+        resetRandomDirection(1.0f);
     }
 
-    public void resetRandomDirection() {
+    public void resetRandomDirection(float speed) {
         Random random = new Random();
-        speedX = (random.nextBoolean() ? 1 : -1) * (6f + random.nextFloat() * 6f);
-        speedY = -12f;
+        speedX = (random.nextBoolean() ? 1 : -1) * (6f + random.nextFloat() * 6f) * speed;
+        speedY = -12f * speed;
     }
 
     public void move() {

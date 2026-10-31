@@ -43,6 +43,7 @@ public class GamePlay extends AppCompatActivity implements GameListener {
             }
         });
 
+        playGameView.loadLevel(currentLevel);
         playGameView.startGame();
     }
 
@@ -114,8 +115,10 @@ public class GamePlay extends AppCompatActivity implements GameListener {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                playGameView.resetGame();
-                txtPoint.setText("Point: 0");
+                currentLevel = 1;
+                txtLevel.setText("Level " + currentLevel);
+                playGameView.resetScore();
+                playGameView.loadLevel(currentLevel);
                 playGameView.startGame();
             }
         });
@@ -143,10 +146,9 @@ public class GamePlay extends AppCompatActivity implements GameListener {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                currentLevel++;
+                currentLevel++; // Tăng Level
                 txtLevel.setText("Level " + currentLevel);
-                playGameView.resetGame();
-                txtPoint.setText("Point: 0");
+                playGameView.loadLevel(currentLevel);
                 playGameView.startGame();
             }
         });
