@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent_to_play = new Intent(MainActivity.this, GamePlay.class);
+                Intent intent_to_play = new Intent(MainActivity.this, SelectLevel.class);
                 startActivityForResult(intent_to_play, REQUEST_CODE_PLAY);
             }
         });

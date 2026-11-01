@@ -42,7 +42,8 @@ public class GamePlay extends AppCompatActivity implements GameListener {
                 showPauseMessage();
             }
         });
-
+        currentLevel = getIntent().getIntExtra("SELECTED_LEVEL", 1);
+        txtLevel.setText("Level " + currentLevel);
         playGameView.loadLevel(currentLevel);
         playGameView.startGame();
     }
